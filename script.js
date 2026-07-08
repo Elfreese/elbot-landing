@@ -137,13 +137,13 @@ function applyLang(lang) {
   const toggle = document.getElementById('langToggle');
   if (toggle) toggle.textContent = lang === 'zh' ? 'EN' : '中';
   // Update doc links for language
-  const zhLinks = lang === 'zh';
+  const useEn = lang === 'en';
   document.querySelectorAll('.start-links a, .footer-links a').forEach(a => {
     const href = a.getAttribute('href');
     if (href && href.includes('/docs')) {
-      a.href = zhLinks
-        ? href.replace('/docs/', '/docs/')
-        : href.replace('/docs/', '/docs.en/');
+      a.href = useEn
+        ? href.replace('/docs/', '/docs.en/')
+        : href.replace('/docs.en/', '/docs/');
     }
   });
 }
