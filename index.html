@@ -122,35 +122,7 @@
     <h2 data-i18n="arch.title">Architecture</h2>
   </div>
   <div class="arch-container">
-    <div class="arch-diagram">
-      <div class="arch-layer">
-        <div class="arch-label" data-i18n="arch.input">Input</div>
-        <div class="arch-items">
-          <span>CLI</span><span>QQ</span><span>Telegram</span><span>Elnis</span><span>Cron</span>
-        </div>
-      </div>
-      <div class="arch-arrow"></div>
-      <div class="arch-layer arch-layer-core">
-        <div class="arch-label" data-i18n="arch.core">Core</div>
-        <div class="arch-items">
-          <span>Agent</span><span>Session</span><span>Hook</span><span>Security</span>
-        </div>
-      </div>
-      <div class="arch-arrow"></div>
-      <div class="arch-layer">
-        <div class="arch-label" data-i18n="arch.llm">LLM</div>
-        <div class="arch-items">
-          <span data-i18n="arch.chatMode">Chat Mode</span><span data-i18n="arch.workMode">Work Mode</span><span data-i18n="arch.toolDiscovery">Tool Discovery</span>
-        </div>
-      </div>
-      <div class="arch-arrow"></div>
-      <div class="arch-layer">
-        <div class="arch-label" data-i18n="arch.output">Output</div>
-        <div class="arch-items">
-          <span data-i18n="arch.text">Text</span><span data-i18n="arch.image">Image</span><span data-i18n="arch.file">File</span><span data-i18n="arch.emoticon">Emoticon</span>
-        </div>
-      </div>
-    </div>
+    <div class="arch-svg" id="archDiagram"></div>
   </div>
 </section>
 
