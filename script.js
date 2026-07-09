@@ -192,9 +192,10 @@ function buildArchBlocks(d) {
   return `
     <div class="arch-row">${block('input')}${block('events')}</div>
     <div class="arch-arrow-down"></div>
-    <div class="arch-row">${block('hook', 'arch-block-hook arch-block-wide')}</div>
-    <div class="arch-arrow-down"></div>
-    <div class="arch-row">${block('core', 'arch-block-core arch-block-wide')}</div>
+    <div class="arch-row arch-row-core">
+      ${block('core', 'arch-block-core arch-block-wide')}
+      ${block('hook', 'arch-block-hook')}
+    </div>
     <div class="arch-arrow-down"></div>
     <div class="arch-row">${block('llm')}${block('storage')}${block('output')}</div>
   `;

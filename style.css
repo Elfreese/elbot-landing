@@ -359,6 +359,12 @@ a { color: inherit; text-decoration: none; }
   justify-content: center;
   flex-wrap: wrap;
 }
+.arch-row-core {
+  position: relative;
+  align-items: center;
+  flex-wrap: nowrap;
+  min-height: 12rem;
+}
 .arch-block {
   flex: 1;
   min-width: 180px;
@@ -377,8 +383,22 @@ a { color: inherit; text-decoration: none; }
   background: linear-gradient(135deg, var(--bg-card), #0d1520);
 }
 .arch-block-hook {
-  border-color: rgba(125, 164, 194, 0.28);
+  position: absolute;
+  left: calc(50% + 330px);
+  flex: none;
+  width: 220px;
+  min-width: 0;
+  border-style: dashed;
+  border-color: rgba(125, 164, 194, 0.35);
   background: linear-gradient(135deg, rgba(125, 164, 194, 0.08), var(--bg-card));
+}
+.arch-block-hook::before {
+  content: '';
+  position: absolute;
+  top: 50%;
+  right: 100%;
+  width: 2rem;
+  border-top: 1px dashed rgba(125, 164, 194, 0.35);
 }
 .arch-block-wide {
   max-width: 600px;
@@ -417,8 +437,24 @@ a { color: inherit; text-decoration: none; }
   margin: 0 auto;
   background: linear-gradient(var(--accent-soft), transparent);
 }
+@media (max-width: 1100px) {
+  .arch-row-core {
+    flex-wrap: wrap;
+    min-height: 0;
+  }
+  .arch-block-hook {
+    position: relative;
+    left: auto;
+    width: auto;
+    max-width: 280px;
+  }
+  .arch-block-hook::before {
+    display: none;
+  }
+}
 @media (max-width: 600px) {
   .arch-row { flex-direction: column; align-items: center; }
+  .arch-row-core { flex-wrap: nowrap; }
   .arch-block { width: 100%; max-width: none; }
 }
 
