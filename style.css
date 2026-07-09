@@ -376,6 +376,10 @@ a { color: inherit; text-decoration: none; }
   border-color: var(--accent-soft);
   background: linear-gradient(135deg, var(--bg-card), #0d1520);
 }
+.arch-block-hook {
+  border-color: rgba(125, 164, 194, 0.28);
+  background: linear-gradient(135deg, rgba(125, 164, 194, 0.08), var(--bg-card));
+}
 .arch-block-wide {
   max-width: 600px;
 }
@@ -385,7 +389,8 @@ a { color: inherit; text-decoration: none; }
   color: var(--text);
   margin-bottom: 0.3rem;
 }
-.arch-block-core .arch-block-label {
+.arch-block-core .arch-block-label,
+.arch-block-hook .arch-block-label {
   color: var(--accent);
 }
 .arch-block-sub {

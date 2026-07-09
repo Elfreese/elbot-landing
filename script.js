@@ -35,8 +35,11 @@ const i18n = {
     'arch.eventsSub': 'Elnis + Elvena + Elwisp',
     'arch.eventsItems': ['RSS / Webhook', 'Server alerts', 'Game events', 'Scripts & devices'],
     'arch.core': 'ElBot Core',
-    'arch.coreSub': 'Request, session, context, hooks, tools, and safety in one control layer',
-    'arch.coreItems': ['Agent loop', 'Session & fork', 'Context compression', 'Hook manager', 'ToolRun', 'Risk policy', 'Cron runtime'],
+    'arch.coreSub': 'Request, session, context, tools, and safety in one control layer',
+    'arch.coreItems': ['Agent loop', 'Session & fork', 'Context compression', 'ToolRun', 'Risk policy', 'Cron runtime'],
+    'arch.hook': 'Hook System',
+    'arch.hookSub': 'Hook input, LLM, output, and more. Scripts can be written in any language.',
+    'arch.hookItems': ['Any language', 'Rule hooks', 'Exec scripts', 'More ...'],
     'arch.llm': 'LLM & Skills',
     'arch.llmSub': 'Model routing and token-efficient capabilities',
     'arch.llmItems': ['Chat mode', 'Work mode', 'Tool discovery', 'ELyph skills'],
@@ -97,8 +100,11 @@ const i18n = {
     'arch.eventsSub': 'Elnis + Elvena + Elwisp',
     'arch.eventsItems': ['RSS / Webhook', '服务器告警', '游戏事件', '脚本与设备'],
     'arch.core': 'ElBot 核心',
-    'arch.coreSub': '在统一控制层里管理请求、会话、上下文、Hook、工具和安全策略',
-    'arch.coreItems': ['Agent 循环', '会话与 Fork', '上下文压缩', 'Hook 管理', 'ToolRun', '风险策略', 'Cron 运行时'],
+    'arch.coreSub': '在统一控制层里管理请求、会话、上下文、工具和安全策略',
+    'arch.coreItems': ['Agent 循环', '会话与 Fork', '上下文压缩', 'ToolRun', '风险策略', 'Cron 运行时'],
+    'arch.hook': 'Hook 系统',
+    'arch.hookSub': '可 Hook 输入、LLM、输出等等。脚本支持任意语言编写。',
+    'arch.hookItems': ['任意语言', '规则 Hook', 'Exec 脚本', '更多 ...'],
     'arch.llm': 'LLM 与 Skill',
     'arch.llmSub': '模型路由与 Token 高效能力扩展',
     'arch.llmItems': ['Chat 模式', 'Work 模式', '工具发现', 'ELyph Skill'],
@@ -185,6 +191,8 @@ function buildArchBlocks(d) {
     </div>`;
   return `
     <div class="arch-row">${block('input')}${block('events')}</div>
+    <div class="arch-arrow-down"></div>
+    <div class="arch-row">${block('hook', 'arch-block-hook arch-block-wide')}</div>
     <div class="arch-arrow-down"></div>
     <div class="arch-row">${block('core', 'arch-block-core arch-block-wide')}</div>
     <div class="arch-arrow-down"></div>
