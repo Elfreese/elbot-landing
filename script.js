@@ -4,9 +4,12 @@ const i18n = {
     'nav.features': 'Features',
     'nav.architecture': 'Architecture',
     'nav.start': 'Quick Start',
-    'hero.label': 'Agent Framework / Bot',
+    'nav.openMenu': 'Open navigation',
+    'nav.closeMenu': 'Close navigation',
+    'nav.switchToChinese': 'Switch to Chinese',
+    'nav.switchToEnglish': 'Switch to English',
     'hero.title': 'Let ElBot Feel<br><span class="hero-accent">Everything</span>',
-    'hero.sub': 'A lightweight Agent framework implemented in Go.<br>Token-efficient. Extensible. World-aware.',
+    'hero.sub': 'A lightweight, efficient, highly extensible Agent framework implemented in Go, built to perceive the world.',
     'hero.ctaPrimary': 'Get Started',
     'hero.ctaSecondary': 'Learn More',
     'hero.scroll': 'scroll',
@@ -69,9 +72,12 @@ const i18n = {
     'nav.features': '特性',
     'nav.architecture': '架构',
     'nav.start': '快速开始',
-    'hero.label': 'Agent 框架 / Bot',
+    'nav.openMenu': '打开导航',
+    'nav.closeMenu': '关闭导航',
+    'nav.switchToChinese': '切换至中文',
+    'nav.switchToEnglish': '切换至英文',
     'hero.title': '让 ElBot <span class="hero-accent">感知一切</span>',
-    'hero.sub': '轻量级 Agent 框架，Go 语言实现。<br>Token 高效。可扩展。感知世界。',
+    'hero.sub': '一个Go 语言实现的，能感知世界，高扩展性，轻量高效的 Agent 框架。',
     'hero.ctaPrimary': '开始使用',
     'hero.ctaSecondary': '了解更多',
     'hero.scroll': '向下滚动',
@@ -125,7 +131,7 @@ const i18n = {
     'start.concepts': '核心概念',
     'start.hooks': 'Hook',
     'start.showcase': 'Showcase',
-    'footer.tagline': '让 ElBot 感知万物。',
+    'footer.tagline': '让 ElBot 感知一切。',
     'footer.showcase': 'Showcase',
     'footer.docs': '文档',
     'footer.status': 'ElBot 正在积极开发中。',
@@ -140,6 +146,13 @@ function detectLang() {
 }
 
 let currentLang = detectLang();
+
+function syncMenuA11y(dict = i18n[currentLang]) {
+  const menuToggle = document.getElementById('navMenuToggle');
+  if (!menuToggle) return;
+  const isOpen = menuToggle.getAttribute('aria-expanded') === 'true';
+  menuToggle.setAttribute('aria-label', dict[isOpen ? 'nav.closeMenu' : 'nav.openMenu']);
+}
 
 function applyLang(lang) {
   currentLang = lang;
@@ -160,7 +173,11 @@ function applyLang(lang) {
     archEl.innerHTML = buildArchBlocks(dict);
   }
   const toggle = document.getElementById('langToggle');
-  if (toggle) toggle.textContent = lang === 'zh' ? 'EN' : '中';
+  if (toggle) {
+    toggle.textContent = lang === 'zh' ? 'EN' : '中';
+    toggle.setAttribute('aria-label', dict[lang === 'zh' ? 'nav.switchToEnglish' : 'nav.switchToChinese']);
+  }
+  syncMenuA11y(dict);
   // Update doc links for language
   const useEn = lang === 'en';
   document.querySelectorAll('.start-links a, .footer-links a').forEach(a => {
@@ -176,8 +193,43 @@ function applyLang(lang) {
 // Init i18n immediately to avoid flash
 applyLang(currentLang);
 
-document.getElementById('langToggle').addEventListener('click', () => {
+const nav = document.getElementById('nav');
+const navLinks = document.getElementById('navLinks');
+const navMenuToggle = document.getElementById('navMenuToggle');
+const langToggle = document.getElementById('langToggle');
+
+function setMenuOpen(isOpen) {
+  navLinks.classList.toggle('open', isOpen);
+  navMenuToggle.setAttribute('aria-expanded', String(isOpen));
+  syncMenuA11y();
+}
+
+navMenuToggle.addEventListener('click', () => {
+  setMenuOpen(navMenuToggle.getAttribute('aria-expanded') !== 'true');
+});
+
+langToggle.addEventListener('click', () => {
   applyLang(currentLang === 'zh' ? 'en' : 'zh');
+  setMenuOpen(false);
+});
+
+navLinks.querySelectorAll('a').forEach(link => {
+  link.addEventListener('click', () => setMenuOpen(false));
+});
+
+document.addEventListener('click', event => {
+  if (!nav.contains(event.target)) setMenuOpen(false);
+});
+
+document.addEventListener('keydown', event => {
+  if (event.key === 'Escape' && navMenuToggle.getAttribute('aria-expanded') === 'true') {
+    setMenuOpen(false);
+    navMenuToggle.focus();
+  }
+});
+
+window.addEventListener('resize', () => {
+  if (window.innerWidth > 900) setMenuOpen(false);
 });
 
 // === Architecture blocks builder ===
@@ -191,18 +243,17 @@ function buildArchBlocks(d) {
     </div>`;
   return `
     <div class="arch-row">${block('input')}${block('events')}</div>
-    <div class="arch-arrow-down"></div>
+    <div class="arch-connector arch-connector-in" aria-hidden="true"></div>
     <div class="arch-row arch-row-core">
       ${block('core', 'arch-block-core arch-block-wide')}
       ${block('hook', 'arch-block-hook')}
     </div>
-    <div class="arch-arrow-down"></div>
+    <div class="arch-connector arch-connector-out" aria-hidden="true"></div>
     <div class="arch-row">${block('llm')}${block('storage')}${block('output')}</div>
   `;
 }
 
 // === Nav scroll effect ===
-const nav = document.getElementById('nav');
 let ticking = false;
 
 function onScroll() {
@@ -217,20 +268,23 @@ function onScroll() {
 window.addEventListener('scroll', onScroll, { passive: true });
 
 // === Fade-in on scroll ===
-const observer = new IntersectionObserver((entries) => {
-  entries.forEach(e => {
-    if (e.isIntersecting) {
-      e.target.style.opacity = '1';
-      e.target.style.transform = 'translateY(0)';
-      observer.unobserve(e.target);
-    }
-  });
-}, { threshold: 0.1 });
+const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+const revealTargets = document.querySelectorAll('.stat-card, .feature-card, .arch-svg, .start-links a');
 
-document.querySelectorAll('.stat-card, .feature-card, .arch-svg, .start-links a').forEach((el, i) => {
-  el.style.opacity = '0';
-  el.style.transform = 'translateY(20px)';
-  el.style.transition = `opacity 0.6s ease ${i * 0.08}s, transform 0.6s ease ${i * 0.08}s`;
-  observer.observe(el);
-});
+if (!prefersReducedMotion && 'IntersectionObserver' in window) {
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('is-visible');
+        observer.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.1 });
+
+  revealTargets.forEach((element, index) => {
+    element.classList.add('reveal');
+    element.style.setProperty('--reveal-delay', `${(index % 6) * 0.08}s`);
+    observer.observe(element);
+  });
+}
 
