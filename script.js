@@ -63,10 +63,8 @@ const i18n = {
     'start.concepts': 'Core Concepts',
     'start.hooks': 'Hooks',
     'start.showcase': 'Showcase',
-    'footer.tagline': 'Let ElBot feel everything.',
     'footer.showcase': 'Showcase',
     'footer.docs': 'Docs',
-    'footer.status': 'ElBot is under active development.',
   },
   zh: {
     'nav.features': '特性',
@@ -131,10 +129,8 @@ const i18n = {
     'start.concepts': '核心概念',
     'start.hooks': 'Hook',
     'start.showcase': 'Showcase',
-    'footer.tagline': '让 ElBot 感知一切。',
     'footer.showcase': 'Showcase',
     'footer.docs': '文档',
-    'footer.status': 'ElBot 正在积极开发中。',
   },
 };
 
