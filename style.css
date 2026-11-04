@@ -1,4 +1,4 @@
-/* ElBot Landing — Low-saturation blue, concept design */
+/* ElBot Landing — Official blue identity, dark theme */
 
 :root {
   --bg: #0a0f14;
@@ -10,11 +10,12 @@
   --text: #c8d4e3;
   --text-dim: #aab9cb;
   --text-faint: #94a6ba;
-  --accent: #4a90d9;
-  --heading-accent: #78a9d2;
-  --accent-soft: #2a5a8a;
-  --accent-glow: #4a90d920;
-  --bg-chip: rgba(74, 144, 217, 0.08);
+  --brand: #487db5;
+  --accent: #7ba6d0;
+  --heading-accent: #8cb2d8;
+  --accent-soft: #365f8a;
+  --accent-glow: #487db526;
+  --bg-chip: rgba(72, 125, 181, 0.08);
   --radius: 12px;
   --radius-sm: 8px;
   --transition: 0.4s cubic-bezier(0.2, 0.8, 0.2, 1);
@@ -62,11 +63,21 @@ button:focus-visible {
   justify-content: space-between;
   align-items: center;
 }
-.logo {
-  font-weight: 600;
-  font-size: 1.1rem;
-  letter-spacing: -0.02em;
-  color: var(--text);
+.brand {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  flex-shrink: 0;
+}
+.brand-icon {
+  display: block;
+  width: 2.5rem;
+  height: 2.5rem;
+}
+.brand-wordmark {
+  display: block;
+  width: 6.375rem;
+  height: auto;
 }
 .nav-links {
   display: flex;
@@ -150,8 +161,8 @@ button:focus-visible {
   position: absolute;
   inset: 0;
   background:
-    radial-gradient(ellipse 60% 50% at 50% 40%, var(--accent-glow), transparent 70%),
-    radial-gradient(ellipse 40% 30% at 80% 80%, #1a3a5a18, transparent 60%);
+    radial-gradient(ellipse 50% 45% at 50% 35%, var(--accent-glow), transparent 70%),
+    radial-gradient(ellipse 40% 30% at 80% 80%, #365f8a18, transparent 60%);
 }
 .hero-bg::after {
   content: '';
@@ -169,7 +180,25 @@ button:focus-visible {
   position: relative;
   text-align: center;
   z-index: 1;
-  padding: 0 2rem;
+  padding: 8rem 1.5rem 6rem;
+}
+.hero-emblem {
+  position: relative;
+  width: clamp(7rem, 13vw, 10.5rem);
+  margin: 0 auto 2rem;
+}
+.hero-emblem::before {
+  content: '';
+  position: absolute;
+  inset: -18%;
+  border: 1px solid var(--brand);
+  border-radius: 50%;
+  opacity: 0.12;
+}
+.hero-emblem img {
+  display: block;
+  width: 100%;
+  height: auto;
 }
 .hero-content h1 {
   font-size: clamp(3rem, 8vw, 6rem);
@@ -181,7 +210,7 @@ button:focus-visible {
 }
 .hero-accent {
   font-weight: 500;
-  background: linear-gradient(135deg, var(--accent), #7ab5e8);
+  background: linear-gradient(135deg, var(--accent), #c6d9eb);
   -webkit-background-clip: text;
   background-clip: text;
   -webkit-text-fill-color: transparent;
@@ -201,7 +230,7 @@ button:focus-visible {
 }
 .btn-primary {
   padding: 0.8rem 2rem;
-  background: var(--accent);
+  background: var(--accent-soft);
   color: #fff;
   border-radius: var(--radius-sm);
   font-size: 0.9rem;
@@ -209,7 +238,7 @@ button:focus-visible {
   transition: var(--transition);
 }
 .btn-primary:hover {
-  background: #5a9ee8;
+  background: #406fa0;
   transform: translateY(-1px);
   box-shadow: 0 8px 24px var(--accent-glow);
 }
@@ -610,11 +639,6 @@ footer {
   display: flex;
   justify-content: space-between;
   align-items: flex-start;
-}
-.footer-logo {
-  font-size: 1.2rem;
-  font-weight: 600;
-  color: var(--text);
 }
 .footer-brand p {
   margin-top: 0.5rem;
